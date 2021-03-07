@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <fstream>
 
 using namespace std;
 
@@ -46,6 +47,7 @@ bool isPrime(int x)
 
 int main()
 {
+    ofstream triangleData("triangles.txt");
     int maxValue = 50; // Чем больше maxValue, тем больше треугольников
     int k1 = 0, k2 = 0, gyp = 0, counter = 0;
     for (int p = 2; p < maxValue; p++)
@@ -60,10 +62,11 @@ int main()
                     k1 = pow(p, 2) - pow(q, 2);
                     k2 = 2 * p * q;
                     gyp = pow(p, 2) + pow(q, 2);
-                    cout << "Counter: " << counter << ", p: " << p << ", q: " << q << ", k1: " << k1 << ", k2: " << k2 << ", gyp: " << gyp << endl;
+                    triangleData << "Counter: " << counter << ", p: " << p << ", q: " << q << ", k1: " << k1 << ", k2: " << k2 << ", gyp: " << gyp << endl;
                 }
             }
         }
     }
+    triangleData.close();
     return 0;
 }
