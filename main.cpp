@@ -1,13 +1,17 @@
 #include <iostream>
 #include <cmath>
+#include <vector>
+#include <map>
 #include <fstream>
 
 using namespace std;
 
 bool isRelative(int x, int y)
 {
-    x = abs(x);
-    y = abs(y);
+    // No negative integers in geometry
+
+    // x = abs(x);
+    // y = abs(y);
 
     while (y)
     {
@@ -22,7 +26,7 @@ bool isRelative(int x, int y)
     return true;
 }
 
-bool isEven(int x)
+bool isEven(const int x)
 {
     if (x % 2 == 0)
     {
@@ -31,7 +35,7 @@ bool isEven(int x)
     return false;
 }
 
-bool isPrime(int x)
+bool isPrime(const int x)
 {
     bool res = true;
     for (int i = 2; i < sqrt(x); i++)
@@ -45,11 +49,13 @@ bool isPrime(int x)
     return res;
 }
 
-int main()
+// Generate a vector about triangles with counter, k1, k2, gyp.
+vector<map<string, int>> GeneratePythagorasTriads(const int &maxValue)
 {
-    ofstream triangleData("triangles.txt");
-    int maxValue = 50; // Чем больше maxValue, тем больше треугольников
-    int k1 = 0, k2 = 0, gyp = 0, counter = 0;
+    vector<map<string, int>> PythagorasTriads;
+
+    int counter = 0;
+
     for (int p = 2; p < maxValue; p++)
     {
         for (int q = 1; q < p; q++)
@@ -58,15 +64,38 @@ int main()
             {
                 if (!isRelative(p, q))
                 {
-                    counter++;
-                    k1 = pow(p, 2) - pow(q, 2);
-                    k2 = 2 * p * q;
-                    gyp = pow(p, 2) + pow(q, 2);
-                    triangleData << "Counter: " << counter << ", p: " << p << ", q: " << q << ", k1: " << k1 << ", k2: " << k2 << ", gyp: " << gyp << endl;
+                    map<string, int> PythagorasTriad;
+                    ++counter;
+                    PythagorasTriad["counter"] = counter;
+                    PythagorasTriad["k1"] = pow(p, 2) - pow(q, 2);  // k1
+                    PythagorasTriad["k2"] = 2 * p * q;              // k2
+                    PythagorasTriad["gyp"] = pow(p, 2) + pow(q, 2); // gyp
+                    PythagorasTriads.push_back(PythagorasTriad);
                 }
             }
         }
     }
-    triangleData.close();
+
+    return PythagorasTriads;
+}
+
+void DisplayPythagorasTriads(const vector < map<string, int> PythagorasTriads)
+{
+
+    for (const map<string, int> triangle : PythagorasTriads)
+    {
+        cout << "=> Triangle : " << triangle.at("counter") << endl;
+        cout << "K1 : " << triangle.at("k1") << endl;
+        cout << "K2 : " << triangle.at("k2") << endl;
+        cout << "GYP : " << triangle.at("gyp") << endl;
+        cout << "----------------------------------------" << endl;
+    }
+}
+
+int main()
+{
+
+    DisplayPythagorasTriads(GeneratePythagorasTriads(50));
+
     return 0;
 }
