@@ -79,9 +79,8 @@ vector<map<string, int>> GeneratePythagorasTriads(const int &maxValue)
     return PythagorasTriads;
 }
 
-void DisplayPythagorasTriads(const vector < map<string, int> PythagorasTriads)
+void DisplayPythagorasTriads(const vector<map<string, int>> PythagorasTriads)
 {
-
     for (const map<string, int> triangle : PythagorasTriads)
     {
         cout << "=> Triangle : " << triangle.at("counter") << endl;
